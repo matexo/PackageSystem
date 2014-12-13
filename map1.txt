@@ -1,0 +1,14 @@
+# miasta
+0 MiaastoA
+1 MiaastoB
+2 MiaastoC
+3 MiaastoD
+4 MiaastoA
+5 MiaastoB
+6 MiaastoC
+7 MiaastoD
+8 MiaastoA
+9 MiaastoB
+10 MiaastoC
+11 MiaastoD
+

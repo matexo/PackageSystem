@@ -6,6 +6,7 @@
 package map;
 
 import java.util.ArrayList;
+import java.awt.Color;
 
 /**
  *
@@ -17,6 +18,7 @@ public class City {
     private ArrayList<Connection> cityConnection;
     private ShortestDistance SDist;
     public Position position;
+    private Color color;
         
     public City( int cityId , String cityName ) 
     {
@@ -24,6 +26,7 @@ public class City {
         this.cityName = cityName ;
         cityConnection = new ArrayList<>();
         position = new Position();
+        color = Color.BLACK;
     }
     
     public int getCityId()                                                      { return cityId; }
@@ -35,6 +38,8 @@ public class City {
     public int getSize()                                                        { return cityConnection.size(); }
     public ShortestDistance getDist()                                           { return SDist; }
     public void setShortestDistance(ShortestDistance s)                         { SDist = s; }
+    public void setColor(Color color) { this.color = color;}
+    public Color getColor() { return color;}
     
     @Override
     public String toString() 

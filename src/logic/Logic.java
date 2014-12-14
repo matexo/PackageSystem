@@ -57,8 +57,8 @@ public class Logic {
                 time= car[i].getTimeTable(j);
                 continue;
                 }
-            heap.insert( new LogInfo(startingPosition , car[i].getPack(k), time , i));
-            heap.insert( new LogInfo(car[i].getCityId(j) , car[i].getPack(k) , car[i].getTimeTable(j), i));
+            heap.insert( new LogInfo(startingPosition , car[i].getPack(k), time , i , false));
+            heap.insert( new LogInfo(car[i].getCityId(j-1) , car[i].getPack(k) , car[i].getTimeTable(j), i , true));
             k++;
             }
         }
@@ -67,9 +67,24 @@ public class Logic {
     public String writeLog(LogInfo tmp)
     {
         if(tmp == null) return "KONIEC";
-        return (tmp.time + " Samochód nr:" + tmp.carId + " " + task(tmp.city) + "przesyłkę " + tmp.pack.getPackageId() 
-                + " " + tmp.pack.getPackageName() + task2(tmp.city) + " " + map.getCity(tmp.city).getCityId() 
+        return (tmp.time + " Samochód nr:" + tmp.carId + " " + task(tmp.status) + "przesyłkę " + tmp.pack.getPackageId() 
+                + " " + tmp.pack.getPackageName() + task2(tmp.status) + " " + map.getCity(tmp.city).getCityId() 
                             + " : " + map.getCity(tmp.city).getCityName());
+    }
+    
+    public void writeLogs()
+    {
+    PriorityQueue<LogInfo> heapTmp = new PriorityQueue<>();
+    
+    while(!heap.isEmpty())
+        {
+        LogInfo tmp = heap.pop();
+        System.out.println( tmp.time + task(tmp.status) + "przesyłkę " + tmp.pack.getPackageId() 
+                            + " " + tmp.pack.getPackageName() + task2(tmp.status) + " " + map.getCity(tmp.city).getCityId() 
+                            + " : " + map.getCity(tmp.city).getCityName());
+        heapTmp.insert(tmp);
+        }
+    heap = heapTmp;
     }
     
     public LogInfo getLog()
@@ -79,16 +94,16 @@ public class Logic {
     else return null;
     }
     
-    public String task( int cityId)
+    public String task( boolean status)
     {
-    if(cityId == startingPosition)
+    if(!status)
         return " pobrano ";
     else return " dostarczono ";
     }
     
-    public String task2 (int cityId)
+    public String task2 (boolean status)
     {
-    if(cityId == startingPosition)
+    if(!status)
         return "z miasta ";
     else return "do miasta ";   
     }

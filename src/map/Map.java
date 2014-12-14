@@ -5,6 +5,7 @@
  */
 package map;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +29,16 @@ public class Map {
         this.getCity(i).position.x = (int)(300+Math.cos(Math.toRadians(currentAngle))*200);
         this.getCity(i).position.y = (int)(300+Math.sin(Math.toRadians(currentAngle))*200);
         currentAngle += angle;
+        }
+    }
+    
+    public void clearColor()
+    {
+    for(int i=0;i<this.getSize();i++)
+        {
+        this.getCity(i).setColor(Color.black);
+        for(int j=0;j<this.getCity(i).getSize();j++)
+            this.getCity(i).getConnection(j).setColor(Color.black);
         }
     }
     

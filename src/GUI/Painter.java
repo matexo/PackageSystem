@@ -32,14 +32,16 @@ public class Painter extends JPanel{
     public void paintComponent(Graphics g)
     {
     super.paintComponent(g);
-    g.setColor(Color.black);
     for(int i=0;i<map.getSize();i++)
         {
+        
+        g.setColor(map.getCity(i).getColor());
         int x1 = map.getCity(i).position.x;    
         int y1 = map.getCity(i).position.y;       
         drawCircle(g , x1 , y1 , radius);
         g.setColor(Color.RED);
         g.drawString(String.valueOf(i) , x1 , y1-25);
+        
         for(int j =0;j<map.getCity(i).getSize();j++)
             {
             g.setColor(map.getCity(i).getConnection(j).getColor());

@@ -6,7 +6,6 @@
 package GUI;
 
 import car.Car;
-import java.awt.Color;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,12 +44,15 @@ public class GUI extends JFrame{
     pack= new PriorityQueue<>();
     pack = Parser.parsePackage("packages.txt"); 
         
-    logic = new Logic(map , pack , 3 , 1 , 0);
+    logic = new Logic(map , pack , 1 , 2 , 0);
     logic.run();
+    logic.writeLogs();
     initFrame();
     
     cars = logic.getCars();
     
+    for(int i=0;i<cars.length;i++)
+        cars[i].writeRoad();
     
     painter = new Painter(map , cars);
     painter.setBounds(0, 0, 600, 600);
@@ -67,9 +69,23 @@ public class GUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) 
                 {
+                map.clearColor();
                 log = logic.getLog();
                 logger.setText(logic.writeLog(log));
-                
+                if(log.status == false)
+                    map.getCity(log.city).setColor(cars[log.carId].getColor());
+                else {
+                     map.getCity(log.city).setColor(cars[log.carId].getColor());
+                     map.getCity(log.pack.getDestinationCityId()).setColor(cars[log.carId].getColor());
+                     int value = map.getCity(log.pack.getDestinationCityId()).getDist().previus[log.city];
+                     //do {
+                     
+                     //}
+                     //while(value!=-1);
+                     }
+                painter.map = map;
+                painter.repaint();
+
                 }
         });
     add(nextStep);

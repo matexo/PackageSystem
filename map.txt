@@ -5,3 +5,8 @@
 3 MiaastoD
 4 MiaastoE
 5 MiaastoF
+1 MiaastoB
+2 MiaastoC
+3 MiaastoD
+4 MiaastoE
+5 MiaastoF

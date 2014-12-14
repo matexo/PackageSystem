@@ -1,6 +1,7 @@
 package car;
 
 
+import java.awt.Color;
 import java.util.ArrayList;
 import priorityQueue.Pack;
 
@@ -18,6 +19,7 @@ public class Car {
     private ArrayList<Integer> deliveryRoad;
     private ArrayList<Pack> pack;
     private ArrayList<Integer> timeTable;
+    private Color color;
     
     private int time; // jako sumy czesciowe w tablicy => prostsze do wypisywania w loggerze
     private int size;
@@ -27,6 +29,7 @@ public class Car {
     public int getSize() { return size; }
     public void setSize(int size) { this.size = size; }
     public void addSize() { size++; }
+    public Color getColor() { return color; }
     
     public int getTimeTableSize () { return timeTable.size(); }
     
@@ -39,6 +42,7 @@ public class Car {
     timeTable.add(0);
     time=0;
     this.size=0;
+    color = new Color( this.hashCode()%255, (120+this.hashCode())%255, (240+this.hashCode())%255);
     }
     
     public void writeRoad()

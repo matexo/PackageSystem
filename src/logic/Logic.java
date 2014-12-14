@@ -23,6 +23,7 @@ public class Logic {
     PriorityQueue<LogInfo> heap;
     private final int startingPosition;
     
+    public Car[] getCars() { return car; }
     
     public Logic(Map map , PriorityQueue queue , int carCounter , int size , int startingPosition)
     {
@@ -42,7 +43,6 @@ public class Logic {
     generateShortestRoute();
     simulateRoute();
     addLogs();
-    writeLogs();
     }
     
     public void addLogs()
@@ -57,22 +57,26 @@ public class Logic {
                 time= car[i].getTimeTable(j);
                 continue;
                 }
-            heap.insert( new LogInfo(startingPosition , car[i].getPack(k), time));
-            heap.insert( new LogInfo(car[i].getCityId(j) , car[i].getPack(k) , car[i].getTimeTable(j)));
+            heap.insert( new LogInfo(startingPosition , car[i].getPack(k), time , i));
+            heap.insert( new LogInfo(car[i].getCityId(j) , car[i].getPack(k) , car[i].getTimeTable(j), i));
             k++;
             }
         }
     }
     
-    public void writeLogs()
+    public String writeLog(LogInfo tmp)
     {
-    while(!heap.isEmpty())
-        {
-        LogInfo tmp = heap.pop();
-        System.out.println( tmp.time + task(tmp.city) + "przesyłkę " + tmp.pack.getPackageId() 
-                            + " " + tmp.pack.getPackageName() + task2(tmp.city) + " " + map.getCity(tmp.city).getCityId() 
+        if(tmp == null) return "KONIEC";
+        return (tmp.time + " Samochód nr:" + tmp.carId + " " + task(tmp.city) + "przesyłkę " + tmp.pack.getPackageId() 
+                + " " + tmp.pack.getPackageName() + task2(tmp.city) + " " + map.getCity(tmp.city).getCityId() 
                             + " : " + map.getCity(tmp.city).getCityName());
-        }
+    }
+    
+    public LogInfo getLog()
+    {
+    if(!heap.isEmpty())
+        return heap.pop();
+    else return null;
     }
     
     public String task( int cityId)

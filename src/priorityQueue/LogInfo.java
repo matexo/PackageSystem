@@ -14,12 +14,14 @@ public class LogInfo implements Comparable<LogInfo>{
     public Integer time;
     public Integer city;
     public Pack pack;
+    public Integer carId;
     
-    public LogInfo(Integer cityId, Pack pack, Integer timeTable) 
+    public LogInfo(Integer cityId, Pack pack, Integer timeTable , Integer carId) 
     {
     this.time = timeTable;
     this.city = cityId;
     this.pack = pack;
+    this.carId = carId;
     }
 
     @Override

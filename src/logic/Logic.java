@@ -78,7 +78,6 @@ public class Logic {
     public void writeLogs()
     {
     PriorityQueue<LogInfo> heapTmp = new PriorityQueue<>();
-    
     while(!heap.isEmpty())
         {
         LogInfo tmp = heap.pop();

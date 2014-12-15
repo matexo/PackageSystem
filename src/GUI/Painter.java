@@ -22,31 +22,28 @@ public class Painter extends JPanel{
     public Map map;
     public Car[] cars;
     public int radius = 10;
-    public BasicStroke x;
     
     public Painter(Map map , Car[] cars)
     {
     this.map = map;
     this.cars = cars;
-    x = new BasicStroke(3);
     }
 
     @Override
     public void paintComponent(Graphics g)
     {
-    super.paintComponent(g);
+    BasicStroke x = new BasicStroke(3);
     Graphics2D g2 = (Graphics2D) g;
     g2.setStroke(x);
+    super.paintComponent(g);
     for(int i=0;i<map.getSize();i++)
         {
-        
         g.setColor(map.getCity(i).getColor());
         int x1 = map.getCity(i).position.x;    
         int y1 = map.getCity(i).position.y;       
         drawCircle(g , x1 , y1 , radius);
         g.setColor(Color.RED);
         g.drawString(String.valueOf(i) , x1 , y1-25);
-        
         for(int j =0;j<map.getCity(i).getSize();j++)
             {
             g.setColor(map.getCity(i).getConnection(j).getColor());

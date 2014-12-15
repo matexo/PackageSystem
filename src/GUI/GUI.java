@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import logic.Logic;
 import map.Map;
 import parser.Parser;
@@ -33,9 +34,15 @@ public class GUI extends JFrame{
     public TextField logger;
     public JButton nextStep;
     
+    public JLabel [] labels;
+    
     public LogInfo log;
     
     public Logic logic;
+    
+    public int carSize = 1;
+    public int carQuantity = 10;
+    public int startingPosition = 0;
     
     public GUI() throws FileNotFoundException
     {
@@ -45,15 +52,13 @@ public class GUI extends JFrame{
     pack= new PriorityQueue<>();
     pack = Parser.parsePackage("packages.txt"); 
         
-    logic = new Logic(map , pack , 2 , 2 , 0);
+    logic = new Logic(map , pack , carQuantity , carSize , startingPosition);
     logic.run();
-    logic.writeLogs();
+    //logic.writeLogs();
     initFrame();
+    
     cars = logic.getCars();
-    
-    for(int i=0;i<cars.length;i++)
-        cars[i].writeRoad();
-    
+
     painter = new Painter(map , cars);
     painter.setBounds(0, 0, 600, 600);
     add(painter);
@@ -64,13 +69,14 @@ public class GUI extends JFrame{
     add(logger);
     
     nextStep = new JButton("Następny krok");
-    nextStep.setBounds(800 , 20 , 150 , 50);
+    nextStep.setBounds(610 , 20 , 150 , 50);
     nextStep.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) 
                 {
                 map.clearColor();
                 log = logic.getLog();
+                if(log==null) return;
                 logger.setText(logic.writeLog(log));
                 if(log.status == false)
                     map.getCity(log.city).setColor(cars[log.carId].getColor());
@@ -85,8 +91,6 @@ public class GUI extends JFrame{
                             x = map.getCity(log.city).getDist().previus[x];
                             block.add(x);
                             }
-                        for(int i=0;i<block.size();i++)
-                            System.out.println(block.get(i) + " ");
                         for(int i =0;i<block.size()-2;i++)
                             {
                             map.getCity(block.get(i)).getConnectionByDestinationId(block.get(i+1)).setColor(cars[log.carId].getColor());
@@ -99,12 +103,19 @@ public class GUI extends JFrame{
                 }
         });
     add(nextStep);
-        
+    labels = new JLabel[carQuantity];
+    for(int i=0;i<carQuantity;i++)
+        {  
+        labels[i] = new JLabel("Samochód nr:" + i);
+        labels[i].setForeground(cars[i].getColor());
+        labels[i].setBounds(600  , 100 + i*20 , 100 , 50);
+        add(labels[i]);
+        }
     }
     
     private void initFrame()
     {
-        setSize(1000, 851);
+        setSize(800, 700);
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Wizualizacja");

@@ -6,8 +6,10 @@
 package GUI;
 
 import car.Car;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import javax.swing.JPanel;
 import map.Map;
 
@@ -20,18 +22,21 @@ public class Painter extends JPanel{
     public Map map;
     public Car[] cars;
     public int radius = 10;
-    
+    public BasicStroke x;
     
     public Painter(Map map , Car[] cars)
     {
     this.map = map;
     this.cars = cars;
+    x = new BasicStroke(3);
     }
 
     @Override
     public void paintComponent(Graphics g)
     {
     super.paintComponent(g);
+    Graphics2D g2 = (Graphics2D) g;
+    g2.setStroke(x);
     for(int i=0;i<map.getSize();i++)
         {
         
@@ -47,7 +52,7 @@ public class Painter extends JPanel{
             g.setColor(map.getCity(i).getConnection(j).getColor());
             int x2 = map.getCity(map.getCity(i).getConnection(j).getCityId()).position.x;
             int y2 = map.getCity(map.getCity(i).getConnection(j).getCityId()).position.y;
-            g.drawLine( x1 , y1 , x2 , y2);
+            g2.drawLine( x1 , y1 , x2 , y2);
             g.drawString(String.valueOf(map.getCity(i).getConnection(j).getDistance()) , (x1+x2)/2+10 , (y1+y2)/2-10);
             }
         }

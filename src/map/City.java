@@ -26,7 +26,7 @@ public class City {
         this.cityName = cityName ;
         cityConnection = new ArrayList<>();
         position = new Position();
-        color = Color.BLACK;
+        color = Color.black;
     }
     
     public int getCityId()                                                      { return cityId; }
@@ -40,6 +40,16 @@ public class City {
     public void setShortestDistance(ShortestDistance s)                         { SDist = s; }
     public void setColor(Color color) { this.color = color;}
     public Color getColor() { return color;}
+    
+    public Connection getConnectionByDestinationId (int destinationId)
+    {
+    for(int i =0; i< cityConnection.size();i++)
+        {
+        if(cityConnection.get(i).getCityId() == destinationId)
+            return cityConnection.get(i);
+        }
+    return null;
+    }
     
     @Override
     public String toString() 

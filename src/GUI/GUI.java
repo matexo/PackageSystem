@@ -10,6 +10,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import logic.Logic;
@@ -44,11 +45,10 @@ public class GUI extends JFrame{
     pack= new PriorityQueue<>();
     pack = Parser.parsePackage("packages.txt"); 
         
-    logic = new Logic(map , pack , 1 , 2 , 0);
+    logic = new Logic(map , pack , 2 , 2 , 0);
     logic.run();
     logic.writeLogs();
     initFrame();
-    
     cars = logic.getCars();
     
     for(int i=0;i<cars.length;i++)
@@ -77,12 +77,22 @@ public class GUI extends JFrame{
                 else {
                      map.getCity(log.city).setColor(cars[log.carId].getColor());
                      map.getCity(log.pack.getDestinationCityId()).setColor(cars[log.carId].getColor());
-                     int value = map.getCity(log.pack.getDestinationCityId()).getDist().previus[log.city];
-                     //do {
-                     
-                     //}
-                     //while(value!=-1);
-                     }
+                        ArrayList<Integer> block = new ArrayList<>();
+                        int x=map.getCity(log.pack.getDestinationCityId()).getCityId();
+                        block.add(x);
+                        while(x!=-1)
+                            {
+                            x = map.getCity(log.city).getDist().previus[x];
+                            block.add(x);
+                            }
+                        for(int i=0;i<block.size();i++)
+                            System.out.println(block.get(i) + " ");
+                        for(int i =0;i<block.size()-2;i++)
+                            {
+                            map.getCity(block.get(i)).getConnectionByDestinationId(block.get(i+1)).setColor(cars[log.carId].getColor());
+                            map.getCity(block.get(i+1)).getConnectionByDestinationId(block.get(i)).setColor(cars[log.carId].getColor());
+                            }
+                        }
                 painter.map = map;
                 painter.repaint();
 

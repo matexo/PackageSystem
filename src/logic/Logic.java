@@ -67,9 +67,12 @@ public class Logic {
     public String writeLog(LogInfo tmp)
     {
         if(tmp == null) return "KONIEC";
-        return (tmp.time + " Samochód nr:" + tmp.carId + " " + task(tmp.status) + "przesyłkę " + tmp.pack.getPackageId() 
-                + " " + tmp.pack.getPackageName() + task2(tmp.status) + " " + map.getCity(tmp.city).getCityId() 
-                            + " : " + map.getCity(tmp.city).getCityName());
+        String log = tmp.time + " Samochód nr:" + tmp.carId + " " + task(tmp.status) + "przesyłkę " + tmp.pack.getPackageId() 
+                + " " + tmp.pack.getPackageName() + task2(tmp.status) + " " ;
+        if(tmp.status == true) log += map.getCity(tmp.pack.getDestinationCityId()).getCityId() 
+                            + " : " + map.getCity(tmp.pack.getDestinationCityId()).getCityName();
+        else log += map.getCity(tmp.city).getCityId() + " : " + map.getCity(tmp.city).getCityName();
+        return log;
     }
     
     public void writeLogs()
@@ -79,9 +82,7 @@ public class Logic {
     while(!heap.isEmpty())
         {
         LogInfo tmp = heap.pop();
-        System.out.println( tmp.time + task(tmp.status) + "przesyłkę " + tmp.pack.getPackageId() 
-                            + " " + tmp.pack.getPackageName() + task2(tmp.status) + " " + map.getCity(tmp.city).getCityId() 
-                            + " : " + map.getCity(tmp.city).getCityName());
+            System.out.println(writeLog(tmp));
         heapTmp.insert(tmp);
         }
     heap = heapTmp;

@@ -54,7 +54,7 @@ public class PathFinder {
     {
         initData();
         distanceCost[startCity] = 0;
-        previous[startCity] = 0;
+        previous[startCity] = -1;
         heap.insert(new ValuePriority(startCity , distanceCost[startCity]));
         while(!heap.isEmpty())
             {

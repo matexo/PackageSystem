@@ -43,7 +43,7 @@ public class Painter extends JPanel{
         int y1 = map.getCity(i).position.y;       
         drawCircle(g , x1 , y1 , radius);
         g.setColor(Color.RED);
-        g.drawString(String.valueOf(i) , x1 , y1-25);
+        g.drawString(String.valueOf(map.getCity(i).getCityName()) , x1 , y1-25);
         for(int j =0;j<map.getCity(i).getSize();j++)
             {
             g.setColor(map.getCity(i).getConnection(j).getColor());

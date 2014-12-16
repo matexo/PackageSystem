@@ -5,6 +5,7 @@
  */
 package logic;
 import car.Car;
+import java.util.ArrayList;
 import map.Map;
 import map.ShortestDistance;
 import priorityQueue.*;
@@ -75,23 +76,19 @@ public class Logic {
         return log;
     }
     
-    public void writeLogs()
+    public String writeLogs()
     {
+    String log = " ";
     PriorityQueue<LogInfo> heapTmp = new PriorityQueue<>();
     while(!heap.isEmpty())
         {
         LogInfo tmp = heap.pop();
-            System.out.println(writeLog(tmp));
+        log += writeLog(tmp);
+        log += "\n";
         heapTmp.insert(tmp);
         }
     heap = heapTmp;
-    }
-    
-    public LogInfo getLog()
-    {
-    if(!heap.isEmpty())
-        return heap.pop();
-    else return null;
+    return log;
     }
     
     public String task( boolean status)
@@ -147,5 +144,19 @@ public class Logic {
         pathFinder.findShortestPath(i);
         map.getCity(i).setShortestDistance(new ShortestDistance( pathFinder.getDistanceCost() , pathFinder.getPrevious()));
         }       
+    }
+    
+    public ArrayList<LogInfo> getLogs() 
+    {
+    ArrayList<LogInfo> list = new ArrayList<>();
+    PriorityQueue<LogInfo> heapTmp = new PriorityQueue<>();
+    while(!heap.isEmpty())
+        {
+        LogInfo tmp = heap.pop();
+        list.add(tmp);
+        heapTmp.insert(tmp);
+        }
+    heap = heapTmp;
+    return list;
     }
 }
